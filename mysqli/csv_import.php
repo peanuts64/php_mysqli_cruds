@@ -5,9 +5,12 @@
 	
 	if(isset($_POST["import"]) && ""!=$_POST["import"]) 						// form was submitted
 	{
+		$table_name = "list";
 		$file_name = $_FILES['file_source']['tmp_name'];						// imported file
-		$columns = array("banner_name", "banner_width", "banner_height");		// array of columns
-		$result = $sadb->csv_import($file_name, 'ads_banners', $columns, false);	// importing file into database - file name, table name, array of columns, file has heading
+		$columns = array("Date", "SKU Number", "product", "price");		// array of columns
+  #public function csv_imports($file_name, $table_name, $file_heading, $columns=array() ){
+		$result = $sadb->csv_imports($file_name, $table_name, false, $columns);	
+		// importing file into database - file name, table name, array of columns, file has heading
 		
 		if($result){
 			echo "Data imported successfully";

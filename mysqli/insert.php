@@ -3,7 +3,8 @@
 	include('includes/actions.php');
 	global $sadb;
 	
-	$sadb->insert('test',array('name'=>'Name 5','email'=>'name5@email.com')); // Table name, column names and respective values
+#  public function insert($table,$params=array()) {
+	$sadb->insert('Users',array('User_Name'=>'Name 5', 'Password_hash' => 'hash','email'=>'name5@email.com')); // Table name, column names and respective values
 	$res = $sadb->getResult();
 	
 	echo "<pre>";

@@ -3,7 +3,8 @@
 	include('includes/actions.php');
 	global $sadb;
 	
-	$sadb->update('test',array('name'=>"Name 4",'email'=>"name4@email.com"),'id="1" AND name="Name 1"'); // Table name, column names and values, WHERE conditions
+#  public function updates($table,$where,$params=array()){
+	$sadb->updates('Users','id="9" AND User_name="Name 5"',array('User_Name'=>"Name 4",'email'=>"name4@email.com")); // Table name, column names and values, WHERE conditions
 	$res = $sadb->getResult();
 	
 	echo "<pre>";

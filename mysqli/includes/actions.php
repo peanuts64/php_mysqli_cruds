@@ -106,8 +106,8 @@ class Dbactions {
       $sql='INSERT INTO `'.$table.'` (`'.implode('`, `',array_keys($params)).'`) VALUES (\'' . implode('\', \'', $params) . '\')';
       $this->myQuery = $sql; 
       // The data has been inserted      
-      if ($ins = mysqli_query($sql)) {
-        array_push($this->result,mysqli_insert_id());
+      if ($ins = mysqli_query($this->conn, $sql)) {
+        array_push($this->result,mysqli_insert_id($this->conn));
         return true;
       } else {
         // The data has not been inserted
@@ -138,7 +138,7 @@ class Dbactions {
     
     // If the table exists
     if ($this->tableExists($table)) {
-      $query = mysqli_query($q);
+      $query = mysqli_query($this->conn, $q);
       // If the query returns >= 1 assign the number of rows to numResults
       if ($query) {
         $this->numResults = mysqli_num_rows($query);
@@ -160,15 +160,17 @@ class Dbactions {
     // If the table exists
     if ($this->tableExists($table)) {
       $args=array();
+      print_r($params);
       foreach ($params as $field=>$value) {
         $args[]=$field.'="'.$value.'"'; // Seperate each column out with it's corresponding value
       }
-      
+      print_r($args);
       // Create the query
-      $sql='UPDATE '.$table.' SET '.implode(',',$args).' WHERE '.$where;
+      $sql='UPDATE '.$table.' SET ' . implode(',', $args) .' WHERE '.$where;
       $this->myQuery = $sql; 
-      if ($query = mysqli_query($sql)) {
-        array_push($this->result,mysqli_affected_rows());
+      echo $sql;
+      if ($query = mysqli_query($this->conn, $sql)) {
+        array_push($this->result,mysqli_affected_rows($this->conn));
         return true; // Update has been successful
       } else {
         array_push($this->result,mysqli_error());
@@ -216,16 +218,16 @@ class Dbactions {
     if (!empty($columns)) {
       // If table exists
       if ($this->tableExists($table_name)) {
-        $sql = "LOAD DATA INFILE '".@mysqli_escape_string($file_name).
+        $sql = "LOAD DATA INFILE '".@mysqli_escape_string($this->conn, $file_name).
          "' INTO TABLE `".$table_name.
-         "` FIELDS TERMINATED BY '".@mysqli_escape_string($field_separate_char).
-         "' OPTIONALLY ENCLOSED BY '".@mysqli_escape_string($field_enclose_char).
-         "' ESCAPED BY '".@mysqli_escape_string($field_escape_char).
+         "` FIELDS TERMINATED BY '".@mysqli_escape_string($this->conn, $field_separate_char).
+         "' OPTIONALLY ENCLOSED BY '".@mysqli_escape_string($this->conn, $field_enclose_char).
+         "' ESCAPED BY '".@mysqli_escape_string($this->conn, $field_escape_char).
          "' ".
          ($file_heading ? " IGNORE 1 LINES " : "")
          ."(`".implode("`,`", $columns)."`)";
         
-        $res = @mysqli_query($sql);
+        $res = @mysqli_query($this->conn, $sql);
         return $res;
       } else {
         return false;

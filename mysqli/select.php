@@ -3,7 +3,7 @@
 	include('includes/actions.php');
 	global $sadb;
 	
-	$sadb->select('test', 'name,email', NULL, 'name="john"', 'product_id DESC'); // Table name, Column Names, JOIN, WHERE conditions, ORDER BY conditions
+	$sadb->select('Users', 'User_Name,email', NULL, 'User_Name="john"', 'id DESC'); // Table name, Column Names, JOIN, WHERE conditions, ORDER BY conditions
 	$res = $sadb->getResult();
 	
 	echo "<pre>";
