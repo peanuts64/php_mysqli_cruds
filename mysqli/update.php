@@ -14,14 +14,15 @@
 #############################################################
 $form->form_new_list($inputs);
 echo $form->form;
-print_r($form->post_data_inputs);
-echo $form->input_flag;
+#print_r($form->post_data_inputs);
+#echo $form->input_flag;
 #  public function updates($table,$where,$params=array()){
+	$form->post_data_inputs['Password_hash'] = password_hash($form->post_data_inputs['Password_hash'], PASSWORD_DEFAULT);
 	$status = ($form->input_flag === 'TRUE' ?	
 	$sadb->updates('Users','id="9"',$form->post_data_inputs) // Table name, column names and values, WHERE conditions
 	:
 	'someting went wrog ');
-	echo $status;
+#	echo $status;
 	$res = $sadb->getResult();
 	
 	echo "<pre>";
