@@ -193,8 +193,8 @@ class Dbactions {
         $delete = 'DELETE FROM '.$table.' WHERE '.$where;
       }
             
-      if ($del = mysqli_query($delete)) {
-        array_push($this->result,mysqli_affected_rows());
+      if ($del = mysqli_query($this->conn, $delete)) {
+        array_push($this->result,mysqli_affected_rows($this->conn));
         $this->myQuery = $delete; 
         // The query exectued correctly
         return true;

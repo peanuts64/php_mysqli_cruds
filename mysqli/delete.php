@@ -3,7 +3,7 @@
 	include('includes/actions.php');
 	global $sadb;
 	
-	$sadb->delete('test','id=5'); // Table name, WHERE conditions
+	$sadb->delete('Users','id=12'); // Table name, WHERE conditions
 	$res = $sadb->getResult();
 	
 	echo "<pre>";
