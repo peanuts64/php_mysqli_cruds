@@ -111,7 +111,8 @@ class Dbactions {
         return true;
       } else {
         // The data has not been inserted
-        array_push($this->result,mysqli_error());
+echo $sql;
+#        array_push($this->result,mysqli_error());
         return false;
       }
     } else {
